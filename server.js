@@ -7,7 +7,7 @@ const { error } = require("console");
 
 const dbPath = path.join(__dirname, "database.db");
 const app = express();
-
+const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 let db = null;
@@ -20,8 +20,8 @@ const initializeDbAndServer = async () => {
     });
 
    
-    app.listen(3000, () => {
-      console.log("Server started at http://localhost:3000");
+    app.listen(PORT, () => {
+      console.log(`Server started at ${PORT}`);
     });
   } catch (e) {
     console.error(`Error: ${e.message}`);
