@@ -46,15 +46,19 @@ app.get("/contacts", async (req, res) => {
 app.post("/contacts", async (req, res) => {
   try {
     const { name, email, phone, address } = req.body;
+    const createdAtIST = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
+
     const insertQuery = `
       INSERT INTO contact (name, email, phone, address, createdAt)
-      VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)`;
-    await db.run(insertQuery, [name, email, phone, address]);
+      VALUES (?, ?, ?, ?, ?)`;
+    await db.run(insertQuery, [name, email, phone, address, createdAtIST]);
+
     res.status(200).json({ message: "Contact added successfully" });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
 });
+
 
 //update the existing contact
 app.put('/contacts/:id', async (req, res) => {
